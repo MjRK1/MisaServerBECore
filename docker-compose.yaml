@@ -1,0 +1,37 @@
+version: '1.0',
+
+services:
+  app:
+    build: .
+    container_name: misa_server_app_be
+    ports:
+      - "5000-5000"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=192.168.0.73
+      - DB_PORT=5432
+      - DB_USER=misauser
+      - DB_PASSWORD=misauser123
+      - DB_NAME=misaserverappdb
+      - DB_SYNCHRONIZE=false
+    depends_on:
+      - postgres
+    networks:
+      - misa_network
+
+    postgres:
+      image: postgres:16-alpine
+      container_name: misa_postgres
+      environment:
+        - POSTGRES_USER=misaUser
+        - POSTGRES_PASSWORD=misauser123
+        - POSTGRES_DB=misaserverappdb
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      networks:
+        - misa_network
+  networks:
+    misa_network:
+
+  volumes:
+    postgres_data:
