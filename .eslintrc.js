@@ -148,9 +148,9 @@ module.exports = {
 
     // не используем return await в функциях с async
     'no-return-await': 'off',
-    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-empty-interface": "error",
-    "@typescript-eslint/no-unsafe-argument": "error",
+    "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
