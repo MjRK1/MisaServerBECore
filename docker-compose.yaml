@@ -15,7 +15,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - tailscale
+      - misa_network
     deploy:
       labels:
         tsdproxy.enable: "true"
@@ -31,7 +31,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - tailscale
+      - misa_network
     deploy:
       labels:
         tsdproxy.enable: "true"
