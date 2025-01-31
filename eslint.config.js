@@ -34,7 +34,7 @@ const config = {
     'no-nested-ternary': 'error',
     'space-before-blocks': ['error', { functions: 'always', keywords: 'always', classes: 'always' }],
     'max-classes-per-file': ['error', 1],
-    'class-methods-use-this': 'error',
+    'class-methods-use-this': 0,
     'nonblock-statement-body-position': ['error', 'beside'],
     'brace-style': 'error',
     'array-bracket-spacing': ['error', 'never'],
