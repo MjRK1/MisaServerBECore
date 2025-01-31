@@ -17,8 +17,7 @@
     "check": "npm run lint",
     "preversion": "npm run check",
     "precommit": "npm run check",
-    "prepush": "npm run check",
-    "prepare": "husky"
+    "prepush": "npm run check"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.6",
