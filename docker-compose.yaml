@@ -13,7 +13,7 @@ services:
       - DB_NAME=misaserverappdb
       - DB_SYNCHRONIZE=false
     depends_on:
-      - postgres
+      - db
     networks:
       - misa_network
     volumes:
