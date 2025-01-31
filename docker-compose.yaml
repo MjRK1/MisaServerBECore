@@ -16,6 +16,8 @@ services:
       - postgres
     networks:
       - misa_network
+    volumes:
+      - /usr/src/app/node_modules
     labels:
       tsdproxy.enable: "true"
       tsdproxy.name: 'MisaServerBE'
