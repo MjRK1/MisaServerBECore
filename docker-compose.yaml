@@ -22,7 +22,9 @@ services:
       tsdproxy.enable: "true"
       tsdproxy.name: 'MisaServerBE'
       tsdproxy.container_port: 5000
-  postgres:
+
+
+  db:
     image: postgres:16-alpine
     container_name: misa_postgres
     environment:
@@ -31,6 +33,8 @@ services:
       - POSTGRES_DB=misaserverappdb
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
     networks:
       - misa_network
     labels:
@@ -42,4 +46,4 @@ networks:
   misa_network:
 
 volumes:
-  postgres_data:
+  db_data:
