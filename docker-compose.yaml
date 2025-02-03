@@ -3,7 +3,7 @@ services:
     build: .
     container_name: misa_server_app_be
     ports:
-      - "5001:5000"
+      - "5000:5000"
     environment:
       - NODE_ENV=production
       - DB_HOST=192.168.0.73
@@ -18,10 +18,10 @@ services:
       - misa_network
     volumes:
       - /usr/src/app/node_modules
-#    labels:
-#      tsdproxy.enable: "true"
-#      tsdproxy.name: 'MisaServerBE'
-#      tsdproxy.container_port: 5000
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: 'MisaServerBE'
+      tsdproxy.container_port: 5000
 
 
   db:
@@ -37,10 +37,10 @@ services:
       - "5433:5432"
     networks:
       - misa_network
-#    labels:
-#      tsdproxy.enable: "true"
-#      tsdproxy.name: 'MisaServerDB'
-#      tsdproxy.container_port: 5432
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: 'MisaServerDB'
+      tsdproxy.container_port: 5432
 
 networks:
   misa_network:
