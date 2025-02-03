@@ -2,6 +2,8 @@ services:
   app:
     build: .
     container_name: misa_server_app_be
+    env_file:
+      - ./.env
     ports:
       - "5000:5000"
     environment:
@@ -22,6 +24,7 @@ services:
       tsdproxy.enable: "true"
       tsdproxy.name: 'MisaServerBE'
       tsdproxy.container_port: 5000
+      tsdproxy.authkey: ${TS_AUTH_KEY}
 
 
   db:
@@ -41,6 +44,7 @@ services:
       tsdproxy.enable: "true"
       tsdproxy.name: 'MisaServerDB'
       tsdproxy.container_port: 5432
+      tsdproxy.authkey: ${TS_AUTH_KEY}
 
 networks:
   misa_network:
