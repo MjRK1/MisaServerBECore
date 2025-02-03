@@ -1,5 +1,5 @@
 # Default image
-FROM node:18-alpine
+FROM node:23-alpine
 
 # Installing work directory inside the container
 WORKDIR /usr/src/app
