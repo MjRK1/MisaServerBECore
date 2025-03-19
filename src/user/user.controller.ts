@@ -2,27 +2,27 @@ import {
   Controller,
   Get,
   Post,
-  Body,
+  Body, UseGuards,
   // Patch,
   // Param,
   // Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { Roles } from '../decorators/Roles.decorator';
+import { RolesGuard } from '../roles/roles.guard';
+import { UpdateUserRoleDto } from './dto/update-user-role.dto';
+import { UserData } from '../types/Users/UserData';
+import { Public } from '../decorators/isPublic.decorator';
 // import { UpdateUserDto } from './dto/update-user.dto';
-
+@UseGuards(RolesGuard)
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    return await this.userService.create(createUserDto);
-  }
-
-  @Get()
-  async findAll() {
-    return await this.userService.findAll();
+  @Roles('ADMIN', 'USER')
+  @Post('changeRole')
+  changeRole(@Body() userRoles: UpdateUserRoleDto): Promise<UserData> {
+    return this.userService.changeUserRole(userRoles);
   }
 
   // @Get(':id')
