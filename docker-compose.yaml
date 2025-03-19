@@ -18,10 +18,6 @@ services:
       - misa_network
     volumes:
       - /usr/src/app/node_modules
-    labels:
-      tsdproxy.enable: "true"
-      tsdproxy.name: 'MisaServerBE'
-      tsdproxy.container_port: 5000
 
 
   db:
@@ -32,15 +28,11 @@ services:
       - POSTGRES_PASSWORD=misauser123
       - POSTGRES_DB=misaserverappdb
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
     networks:
       - misa_network
-    labels:
-      tsdproxy.enable: "true"
-      tsdproxy.name: 'MisaServerDB'
-      tsdproxy.container_port: 5432
 
 networks:
   misa_network:
