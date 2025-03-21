@@ -33,7 +33,7 @@ const config = {
     'no-confusing-arrow': 'error',
     'no-nested-ternary': 'error',
     'space-before-blocks': ['error', { functions: 'always', keywords: 'always', classes: 'always' }],
-    'max-classes-per-file': ['error', 1],
+    'max-classes-per-file': 0,
     'class-methods-use-this': 0,
     'nonblock-statement-body-position': ['error', 'beside'],
     'brace-style': 'error',
