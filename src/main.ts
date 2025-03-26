@@ -4,8 +4,8 @@ import { AuthGuard } from './auth/auth.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // await app.listen(5001); for local hosting
-  await app.listen(5000);
+  await app.listen(5001); // for local hosting
+  // await app.listen(5000);
 }
 
 

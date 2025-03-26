@@ -11,6 +11,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { JwtService } from '@nestjs/jwt';
 import { RolesModule } from './roles/roles.module';
 import { RolesGuard } from './roles/roles.guard';
+import { ModuleModule } from './module/module.module';
 
 
 @Module({
@@ -33,7 +34,8 @@ import { RolesGuard } from './roles/roles.guard';
     } as any),
     AuthModule,
     UserModule,
-    RolesModule
+    RolesModule,
+    ModuleModule
   ],
   controllers: [AppController],
   providers: [
