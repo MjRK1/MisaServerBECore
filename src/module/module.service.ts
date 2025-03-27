@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { BadRequestException, Injectable, OnModuleInit } from '@nestjs/common';
 import { CreateModuleDto } from './dto/create-module.dto';
 import { UpdateModuleDto } from './dto/update-module.dto';
 import * as fs from 'node:fs';
@@ -61,12 +61,13 @@ export class ModuleService implements OnModuleInit {
   }
 
   private updateNginx() {
-    const config = this.modules
-      .filter(m => m.enabled)
-      .map(m => `location /api/${m.name} proxy_pass http://${m.services.backend.host}:${m.services.backend.port}`)
-      .join('/n');
+    try {
+      const config = this.modules
+        .filter(m => m.enabled)
+        .map(m => `location /api/${m.name} proxy_pass http://${m.services.backend.host}:${m.services.backend.port}`)
+        .join('/n');
 
-    const nginxConfig = `
+      const nginxConfig = `
       server {
         listen 443 ssl;
         server_name ${URL};
@@ -82,10 +83,13 @@ export class ModuleService implements OnModuleInit {
         }
       }
     `;
-    fs.writeFileSync('/etc/nginx/sites-available/api.misaserver.ru', nginxConfig);
+      fs.writeFileSync('/etc/nginx/sites-available/api.misaserver.ru', nginxConfig);
 
-    exec('systemctl restart nginx', (err) => {
-      // if (err) console.error('Ошибка при обновлении Nginx:', err);
-    });
+      exec('systemctl restart nginx', (err) => {
+        // if (err) console.error('Ошибка при обновлении Nginx:', err);
+      });
+    } catch (err) {
+      throw new BadRequestException(err);
+    }
   }
 }
