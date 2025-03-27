@@ -9,6 +9,7 @@ import { exec } from 'child_process';
 
 
 const CONFIG_PATH = path.join(__dirname, '../../../ModulesConfigs/modules.json');
+const NGINX_CONFIG_PATH = '/etc/nginx/sites-available/api.misaserver.ru';
 
 
 @Injectable()
@@ -65,32 +66,37 @@ export class ModuleService implements OnModuleInit {
     try {
       const config = this.modules
         .filter(m => m.enabled)
-        .map(m => `location /api/${m.name} proxy_pass http://${m.services.backend.host}:${m.services.backend.port}`)
-        .join('/n');
+        .map(m => `
+          location /api/${m.name}/ {
+            proxy_pass http://${m.services.backend.host}:${m.services.backend.port};
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          }
+        `)
+        .join('\n');
 
       const nginxConfig = `
       server {
         listen 443 ssl;
-        server_name ${URL};
+        server_name api.misaserver.ru;
 
         ssl_certificate /etc/nginx/ssl/nginx.crt;
         ssl_certificate_key /etc/nginx/ssl/nginx.key;
 
-        location / {
-                proxy_pass http://127.0.0.1:5000;
-                proxy_set_header Host $host;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        }
+        ${config}
       }
-    `;
-      fs.writeFileSync('/etc/nginx/sites-available/api.misaserver.ru', nginxConfig);
-      console.log('privet');
-      exec('cat /etc/nginx/sites-available/api.misaserver.ru', (err) => {
-console.log(err);
-});
-      exec('systemctl restart nginx', (err) => {
-        if (err) console.error('Ошибка при обновлении Nginx:', err);
+      `;
+
+      fs.writeFileSync(NGINX_CONFIG_PATH, nginxConfig, 'utf8');
+      console.log('Nginx config updated');
+
+      exec('nginx -s reload', (err, stdout, stderr) => {
+        if (err) {
+          console.error('Error reloading Nginx:', stderr);
+        } else {
+          console.log('Nginx reloaded successfully');
+        }
       });
     } catch (err) {
       throw new BadRequestException(err);
