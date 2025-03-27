@@ -1,22 +1,10 @@
 FROM nginx:latest
 
-# Копируем базовый конфиг Nginx
-COPY /etc/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY sites-available/ /etc/nginx/sites-available/
+COPY sites-enabled/ /etc/nginx/sites-enabled/
+COPY ssl/ /etc/nginx/ssl/
 
-# Создаём папку для виртуальных хостов
-RUN mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled /etc/nginx/ssl
+RUN mkdir -p /var/log/nginx && chmod -R 755 /var/log/nginx
 
-# Копируем сертификаты (если их хранишь локально)
-COPY /etc/nginx/ssl/nginx.crt /etc/nginx/ssl/nginx.crt
-COPY /etc/nginx/ssl/nginx.key /etc/nginx/ssl/nginx.key
-
-# Копируем виртуальные хосты
-COPY /etc/nginx/sites-available/ /etc/nginx/sites-available/
-RUN ln -s /etc/nginx/sites-available/api.misaserver.ru /etc/nginx/sites-enabled/
-RUN ln -s /etc/nginx/sites-available/db.misaserver.ru /etc/nginx/sites-enabled/
-
-# Открываем порты
-EXPOSE 443
-
-# Запускаем Nginx
 CMD ["nginx", "-g", "daemon off;"]
