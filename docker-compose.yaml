@@ -19,6 +19,7 @@ services:
       - misa_network
     volumes:
       - /usr/src/app/node_modules
+      - /etc/nginx/sites-available:/etc/nginx/sites-available
 
 
   db:
