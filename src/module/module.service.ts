@@ -84,7 +84,7 @@ export class ModuleService implements OnModuleInit {
         }
       }
     `;
-      fs.writeFileSync('~/etc/nginx/sites-available/api.misaserver.ru', nginxConfig);
+      fs.writeFileSync('/etc/nginx/sites-available/api.misaserver.ru', nginxConfig);
       console.log('privet');
       exec('systemctl restart nginx', (err) => {
         // if (err) console.error('Ошибка при обновлении Nginx:', err);
