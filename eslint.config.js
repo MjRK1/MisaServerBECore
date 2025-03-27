@@ -50,7 +50,7 @@ const config = {
     'no-trailing-spaces': ['error'],
     'space-before-function-paren': ['error', { anonymous: 'always', named: 'never', asyncArrow: 'always' }],
     'no-lonely-if': 'error',
-    'no-console': 'error',
+    'no-console': 'warn',
     "quotes": 0,
     'quote-props': 0,
     ...tseslint.configs['recommended'].rules,

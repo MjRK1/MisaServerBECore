@@ -15,7 +15,7 @@ export class ModuleController {
 
   @Public()
   @Post('enable')
-  enableModule(@Body() moduleName: string) {
-    return this.moduleService.enableModule(moduleName);
+  enableModule(@Body() { name } : {name: string}) {
+    return this.moduleService.enableModule(name);
   }
 }

@@ -8,7 +8,7 @@ import { URL } from '../helpers/env';
 import { exec } from 'child_process';
 
 
-const CONFIG_PATH = path.join(__dirname, '../../configs/modules.json');
+const CONFIG_PATH = path.join(__dirname, '../../../ModulesConfigs/modules.json');
 
 
 @Injectable()
@@ -25,10 +25,10 @@ export class ModuleService implements OnModuleInit {
 
   private async loadModuleConfig() {
     try {
-      const fileContents = fs.readFileSync('configs/modules.json', 'utf8');
-      const parsedConfig = JSON.parse(fileContents) as ModulesFile;
-      this.modules = parsedConfig.modules || [];
-      // console.log('Modules loaded:', this.modules);
+      const fileContents = fs.readFileSync(CONFIG_PATH, 'utf8');
+      const parsedConfig = JSON.parse(fileContents) as ModuleConfig[];
+      this.modules = parsedConfig || [];
+      console.log('Modules loaded:', this.modules);
     } catch (error) {
       this.modules = [];
     }
@@ -44,6 +44,7 @@ export class ModuleService implements OnModuleInit {
 
   enableModule(name: string) {
     const module = this.modules?.find(m => m.name === name);
+    console.log(this.modules, name);
     if (module) {
       module.enabled = true;
       this.saveConfig();
@@ -83,8 +84,8 @@ export class ModuleService implements OnModuleInit {
         }
       }
     `;
-      fs.writeFileSync('/etc/nginx/sites-available/api.misaserver.ru', nginxConfig);
-
+      fs.writeFileSync('~/etc/nginx/sites-available/api.misaserver.ru', nginxConfig);
+      console.log('privet');
       exec('systemctl restart nginx', (err) => {
         // if (err) console.error('Ошибка при обновлении Nginx:', err);
       });
