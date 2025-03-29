@@ -12,6 +12,7 @@ import { JwtService } from '@nestjs/jwt';
 import { RolesModule } from './roles/roles.module';
 import { RolesGuard } from './roles/roles.guard';
 import { ModuleModule } from './module/module.module';
+import { KafkaModule } from './kafka/kafka.module';
 
 
 @Module({
@@ -35,7 +36,8 @@ import { ModuleModule } from './module/module.module';
     AuthModule,
     UserModule,
     RolesModule,
-    ModuleModule
+    ModuleModule,
+    KafkaModule
   ],
   controllers: [AppController],
   providers: [
