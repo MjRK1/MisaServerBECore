@@ -56,7 +56,7 @@ const config = {
     ...tseslint.configs['recommended'].rules,
     ...tseslint.configs['eslint-recommended'],
   },
-  ignores: ['eslint.config.js', 'vite.config.ts'],
+  ignores: ['eslint.config.js', 'vite.config.ts', '/dist/'],
   files: ['**/*.ts', '**/*.tsx'],
 
 };

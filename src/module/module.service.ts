@@ -29,6 +29,7 @@ export class ModuleService implements OnModuleInit {
     }
   }
 
+
   private saveConfig() {
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(this.modules, null, 2), 'utf8');
   }
