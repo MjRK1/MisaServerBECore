@@ -39,6 +39,7 @@ services:
       - "5433:5432"
     networks:
       - misa_network
+      - kafka_network
 
   nginx:
     build: ./nginx
@@ -74,6 +75,7 @@ services:
       - db
     networks:
       - misa_network
+      - kafka_network
     volumes:
       - /usr/src/misafiles/node_modules
 
