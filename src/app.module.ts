@@ -13,6 +13,7 @@ import { RolesModule } from './roles/roles.module';
 import { RolesGuard } from './roles/roles.guard';
 import { ModuleModule } from './module/module.module';
 import { KafkaModule } from './kafka/kafka.module';
+import { Role } from './roles/entities/roles.entity';
 
 
 @Module({
@@ -26,7 +27,8 @@ import { KafkaModule } from './kafka/kafka.module';
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        entities: [User], // Указываем сущности
+        entities: [User, Role], // Указываем сущности
+        schema: configService.get('DB_SCHEMA'),
         synchronize: configService.get<boolean>('DB_SYNCHRONIZE'), // Для разработки можно оставить true
         autoLoadEntities: true,
         migrations: ["dist/db/migrations/*.js"],

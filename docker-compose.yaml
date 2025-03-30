@@ -1,7 +1,7 @@
 services:
-  app:
+  coreBE:
     build: .
-    container_name: misa_server_app_be
+    container_name: MisaServerCoreBE
     ports:
       - "5000:5000"
     environment:
@@ -12,6 +12,7 @@ services:
       - DB_PASSWORD=misauser123
       - DB_NAME=misaserverappdb
       - DB_SYNCHRONIZE=false
+      - DB_SCHEMA=misacore_schema
       - JWT_SECRET=misaserverJWTkey123
       - KAFKA_HOST=kafka
     depends_on:
@@ -32,6 +33,7 @@ services:
       - POSTGRES_DB=misaserverappdb
     volumes:
       - db_data:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
     ports:
       - "5433:5432"
     networks:
@@ -49,6 +51,30 @@ services:
       - app
     networks:
       - misa_network
+
+  MisaFiles:
+    build: ../MisaFilesBE/
+    container_name: MisaFilesBE
+    ports:
+      - "5002:5002"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=misauser
+      - DB_PASSWORD=misauser123
+      - DB_NAME=misaserverappdb
+      - DB_SYNCHRONIZE=false
+      - DB_SCHEMA=misaFiles_schema
+      - JWT_SECRET=misaserverJWTkey123
+      - KAFKA_HOST=kafka
+    depends_on:
+      - db
+    networks:
+      - misa_network
+    volumes:
+      - /usr/src/app/node_modules
+
 networks:
   misa_network:
 

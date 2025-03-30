@@ -16,5 +16,6 @@ export const AppDataSource = new DataSource({
   database: configService.get('DB_NAME'),
   entities: ["dist/entities/*.entities.js"],
   migrations: ["dist/db/migrations/*.js"],
+  schema: configService.get('DB_SCHEMA'),
   synchronize: false,
 });
