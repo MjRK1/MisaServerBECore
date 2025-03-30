@@ -16,6 +16,7 @@ const config = {
   rules: {
     'max-len': ['error', { code: 180, comments: 512 }],
     'func-names': ['error', 'as-needed'],
+    'no-unused-expressions': 'error',
     'semi': ['error', 'always'],
     'semi-spacing': ['error', { before: false, after: true }],
     'no-else-return': 'error',

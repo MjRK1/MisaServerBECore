@@ -7,20 +7,20 @@ import { ConfigService } from '@nestjs/config';
 export class KafkaService implements OnModuleInit, OnModuleDestroy {
   private kafka: Kafka;
 
+
   private producer: Producer;
 
 
-  // constructor(private configService: ConfigService) {
-  //   this.kafka = new Kafka({
-  //     clientId: 'misaserver',
-  //     // brokers: [`${configService.get<string>('KAFKA_HOST')}:9092`]
-  //     brokers: [`localhost:9092`]
-  //   });
-  //   this.producer = this.kafka.producer();
-  // }
+  constructor(private configService: ConfigService) {
+    this.kafka = new Kafka({
+      clientId: 'misaserver',
+      brokers: [`${process.env.KAFKA_HOST}:9092`]
+    });
+    this.producer = this.kafka.producer();
+  }
 
   async onModuleInit() {
-    // await this.producer.connect();
+    await this.producer.connect();
   }
 
   async sendMessage(topic: string, message: string) {
@@ -31,6 +31,6 @@ export class KafkaService implements OnModuleInit, OnModuleDestroy {
   }
 
   async onModuleDestroy() {
-    // await this.producer.disconnect();
+    await this.producer.disconnect();
   }
 }

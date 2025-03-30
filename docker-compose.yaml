@@ -69,6 +69,7 @@ services:
       - DB_SCHEMA=misaFiles_schema
       - JWT_SECRET=misaserverJWTkey123
       - KAFKA_HOST=kafka
+      - PORT=5002
     depends_on:
       - db
     networks:
