@@ -49,7 +49,7 @@ services:
     volumes:
       - ./nginx/logs:/var/log/nginx
     depends_on:
-      - coreBE
+      - corebe
     networks:
       - misa_network
 
