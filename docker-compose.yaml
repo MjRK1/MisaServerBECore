@@ -1,5 +1,5 @@
 services:
-  coreBE:
+  corebe:
     build: .
     container_name: MisaServerCoreBE
     ports:
@@ -21,7 +21,7 @@ services:
     networks:
       - misa_network
     volumes:
-      - /usr/src/coreBE/node_modules
+      - /usr/src/corebe/node_modules
       - /etc/nginx/sites-available:/etc/nginx/sites-available
 
 
@@ -53,7 +53,7 @@ services:
     networks:
       - misa_network
 
-  MisaFiles:
+  misafiles:
     build: ../MisaFilesBE/
     container_name: MisaFilesBE
     ports:
@@ -75,7 +75,7 @@ services:
     networks:
       - misa_network
     volumes:
-      - /usr/src/MisaFiles/node_modules
+      - /usr/src/misafiles/node_modules
 
 networks:
   misa_network:
