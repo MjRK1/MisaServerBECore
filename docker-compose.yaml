@@ -20,6 +20,7 @@ services:
       - db
     networks:
       - misa_network
+      - kafka-network
     volumes:
       - /usr/src/corebe/node_modules
       - /etc/nginx/sites-available:/etc/nginx/sites-available
@@ -74,11 +75,15 @@ services:
       - db
     networks:
       - misa_network
+      - kafka-network
     volumes:
       - /usr/src/misafiles/node_modules
 
 networks:
   misa_network:
+
+  kafka-network:
+    external: true
 
 volumes:
   db_data:
