@@ -13,6 +13,7 @@ services:
       - DB_NAME=misaserverappdb
       - DB_SYNCHRONIZE=false
       - JWT_SECRET=misaserverJWTkey123
+      - KAFKA_HOST=kafka
     depends_on:
       - db
     networks:
