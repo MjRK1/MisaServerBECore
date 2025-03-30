@@ -21,7 +21,7 @@ services:
     networks:
       - misa_network
     volumes:
-      - /usr/src/app/node_modules
+      - /usr/src/coreBE/node_modules
       - /etc/nginx/sites-available:/etc/nginx/sites-available
 
 
@@ -49,7 +49,7 @@ services:
     volumes:
       - ./nginx/logs:/var/log/nginx
     depends_on:
-      - app
+      - coreBE
     networks:
       - misa_network
 
@@ -75,7 +75,7 @@ services:
     networks:
       - misa_network
     volumes:
-      - /usr/src/app/node_modules
+      - /usr/src/MisaFiles/node_modules
 
 networks:
   misa_network:
