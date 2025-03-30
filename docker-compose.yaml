@@ -83,7 +83,8 @@ networks:
   misa_network:
 
   kafka-network:
-    external: true
+    external:
+      name: kafka-external-network
 
 volumes:
   db_data:
