@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 
-@Entity('roles')
+@Entity('roles', {schema: 'misacore_schema'})
 export class Role {
   @PrimaryGeneratedColumn()
   id: number;

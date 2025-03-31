@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { Role } from '../../roles/entities/roles.entity';
 
-@Entity('users')
+@Entity('users', {schema: 'misacore_schema'})
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

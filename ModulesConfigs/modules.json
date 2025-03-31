@@ -1,0 +1,18 @@
+[
+  {
+    "name": "file-server",
+    "enabled": true,
+    "repo": "https://github.com/MisaserverFileServerBE.git",
+    "basePath": "/file-server",
+    "services": {
+      "backend": {
+        "host": "file-server",
+        "port": 3001
+      },
+      "frontend": {
+        "host": "file-server-fe",
+        "port": 3002
+      }
+    }
+  }
+]

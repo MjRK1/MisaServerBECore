@@ -16,6 +16,7 @@ const config = {
   rules: {
     'max-len': ['error', { code: 180, comments: 512 }],
     'func-names': ['error', 'as-needed'],
+    'no-unused-expressions': 'error',
     'semi': ['error', 'always'],
     'semi-spacing': ['error', { before: false, after: true }],
     'no-else-return': 'error',
@@ -50,13 +51,13 @@ const config = {
     'no-trailing-spaces': ['error'],
     'space-before-function-paren': ['error', { anonymous: 'always', named: 'never', asyncArrow: 'always' }],
     'no-lonely-if': 'error',
-    'no-console': 'error',
+    'no-console': 'warn',
     "quotes": 0,
     'quote-props': 0,
     ...tseslint.configs['recommended'].rules,
     ...tseslint.configs['eslint-recommended'],
   },
-  ignores: ['eslint.config.js', 'vite.config.ts'],
+  ignores: ['eslint.config.js', 'vite.config.ts', '/dist/'],
   files: ['**/*.ts', '**/*.tsx'],
 
 };
