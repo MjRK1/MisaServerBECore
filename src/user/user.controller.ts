@@ -13,6 +13,8 @@ import { RolesGuard } from '../roles/roles.guard';
 import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { UserData } from '../types/Users/UserData';
 import { Public } from '../decorators/isPublic.decorator';
+import { User } from './entities/user.entity';
+import { AllUsersDto } from './dto/all-users.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
 @UseGuards(RolesGuard)
 @Controller('users')
@@ -23,6 +25,13 @@ export class UserController {
   @Post('changeRole')
   changeRole(@Body() userRoles: UpdateUserRoleDto): Promise<UserData> {
     return this.userService.changeUserRole(userRoles);
+  }
+
+
+  @Get()
+  @Public()
+  async findAll(): Promise<AllUsersDto[]> {
+    return this.userService.findAll();
   }
 
   // @Get(':id')

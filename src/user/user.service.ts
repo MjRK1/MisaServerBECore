@@ -6,6 +6,7 @@ import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { RolesService } from '../roles/roles.service';
 import { Role } from '../roles/entities/roles.entity';
 import { UserData } from '../types/Users/UserData';
+import { AllUsersDto } from './dto/all-users.dto';
 
 @Injectable()
 export class UserService {
@@ -16,6 +17,16 @@ export class UserService {
     @InjectRepository(Role)
     private readonly rolesRepository: Repository<Role>,
   ) {
+  }
+
+  async findAll(): Promise<AllUsersDto[]> {
+    const users = await this.usersRepository.find();
+    return users.map(user => ({
+      userId: user.id,
+      username: user.username,
+      displayName: user.displayName,
+      roles: user.roles,
+    }));
   }
 
   async changeUserRole(userRoles: UpdateUserRoleDto): Promise<UserData> {
