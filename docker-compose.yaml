@@ -24,6 +24,7 @@ services:
     volumes:
       - /usr/src/corebe/node_modules
       - /etc/nginx/sites-available:/etc/nginx/sites-available
+      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
 
 
   db:
@@ -49,7 +50,6 @@ services:
       - "443:443"
     volumes:
       - ./nginx/logs:/var/log/nginx
-      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - corebe
     networks:
