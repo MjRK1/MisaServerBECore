@@ -78,7 +78,7 @@ services:
       - kafka-network
     volumes:
       - /usr/src/misafiles/node_modules
-      - /home/misa_server/MisaServer/uploads
+      - /home/misa_server/MisaServer/uploads:/usr/src/app/uploads
 
 networks:
   misa_network:
