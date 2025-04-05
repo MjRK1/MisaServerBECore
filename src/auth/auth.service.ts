@@ -6,6 +6,7 @@ import { User } from '../user/entities/user.entity';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RolesService } from '../roles/roles.service';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -75,5 +76,18 @@ export class AuthService {
   async logout({ sub }: {sub: number}): Promise<string> {
     await this.userRepository.update(sub, { refreshToken: null});
     return "Successfully logged out";
+  }
+
+  async verifyToken(req: Request) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader.split(' ')[1];
+    if (!token) throw new UnauthorizedException('You are not logged in!');
+
+    try {
+      const payload = this.jwtService.verify(token);
+      return { valid: true, user: payload };
+    } catch (error) {
+      throw new ForbiddenException(error);
+    }
   }
 }

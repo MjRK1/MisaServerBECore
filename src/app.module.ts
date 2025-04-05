@@ -39,7 +39,7 @@ import { Role } from './roles/entities/roles.entity';
     UserModule,
     RolesModule,
     ModuleModule,
-    KafkaModule
+    // KafkaModule
   ],
   controllers: [AppController],
   providers: [

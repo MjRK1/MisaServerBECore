@@ -1,7 +1,8 @@
-import { Body, Controller, Post, Req } from '@nestjs/common';
+import { Body, Controller, Post, Req, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
 import { Public } from '../decorators/isPublic.decorator';
+import { Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -29,5 +30,11 @@ export class AuthController {
   async logout(@Req() req) {
     const user = await req.user;
     await this.authService.logout({sub: user.sub});
+  }
+
+  @Public()
+  @Post('verify')
+  async verifyToken(@Req() req: Request) {
+    return await this.authService.verifyToken(req);
   }
 }
