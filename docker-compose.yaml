@@ -26,6 +26,17 @@ services:
       - /etc/nginx/sites-available:/etc/nginx/sites-available
       - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
 
+  corefe:
+    build: ../MisaServerCoreFE
+    container_name: MisaServerCoreFE
+    depends_on:
+      - corebe
+    volumes:
+      - /usr/src/corefe/node_modules
+    networks:
+      - misa_network
+
+
 
   db:
     image: postgres:16-alpine
