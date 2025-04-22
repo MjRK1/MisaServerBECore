@@ -1,5 +1,6 @@
 export interface ModuleConfig {
   name: string;
+  img?: string | null;
   repo?: string;
   basePath: string;
   services: {

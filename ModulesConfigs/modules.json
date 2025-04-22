@@ -1,6 +1,7 @@
 [
   {
-    "name": "file-server",
+    "name": "MisaFiles",
+    "img": "MisaFiles.png",
     "enabled": true,
     "repo": "https://github.com/MisaserverFileServerBE.git",
     "basePath": "/file-server",

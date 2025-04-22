@@ -38,6 +38,10 @@ export class ModuleService implements OnModuleInit {
     return this.modules;
   }
 
+  getModuleByName(name: string): (ModuleConfig | null) {
+    return this.modules.find(module => module.name === name);
+  }
+
   enableModule(name: string) {
     const module = this.modules?.find(m => m.name === name);
     if (module) {

@@ -1,5 +1,11 @@
-import { ForbiddenException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { hash, compare } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
@@ -7,6 +13,8 @@ import { LoginDto, RegisterDto } from './dto/auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RolesService } from '../roles/roles.service';
 import { Request } from 'express';
+import { ILoginResponse } from '../types/Auth/Auth';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -15,13 +23,21 @@ export class AuthService {
     private userRepository: Repository<User>,
     private jwtService: JwtService,
     private rolesService: RolesService,
+    private configService: ConfigService,
   ) {}
 
   async register(registerDto: RegisterDto): Promise<string> {
     const { username, password, displayName } = registerDto;
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hash(password, 10);
     const userRoles = await this.rolesService.findByName('USER');
+
+    const foundedUser = await this.userRepository.findOne({where: {username}});
+
+    if (foundedUser) {
+      throw new BadRequestException('Такой пользователь уже существует');
+    }
+
     const user = this.userRepository.create({
       username,
       password: hashedPassword,
@@ -35,7 +51,7 @@ export class AuthService {
     return 'success';
   }
 
-  async login(loginDto: LoginDto): Promise<{ accessToken: string, refreshToken: string }> {
+  async login(loginDto: LoginDto): Promise<ILoginResponse> {
     const { username, password } = loginDto;
 
     const user = await this.userRepository.findOne({ where: { username } });
@@ -44,7 +60,7 @@ export class AuthService {
       throw new NotFoundException('Пользователь не найден');
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await compare(password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Неверный пароль');
     }
@@ -54,18 +70,26 @@ export class AuthService {
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
     await this.userRepository.update(user.id, { refreshToken });
 
-    return {accessToken, refreshToken};
+    return {
+      id: user.id,
+      username: user.username,
+      displayName: user.displayName,
+      roles: user.roles.map(role => role.name),
+      accessToken,
+      refreshToken
+    };
   }
 
-  async refreshAccessToken(refreshToken: string): Promise<{accessToken: string}> {
+  async refreshAccessToken(req: Request): Promise<{accessToken: string}> {
+    const authHeader = req.body.headers['Authorization'];
+    const token = authHeader?.split(' ')[1];
+    if (!token) throw new UnauthorizedException('You are not logged in!');
     try {
-      const decoded = this.jwtService.verify(refreshToken);
+      const decoded = this.jwtService.verify(token);
       const user = await this.userRepository.findOne({ where: { id: decoded.sub } });
-
-      if (!user || user.refreshToken !== refreshToken) {
+      if (!user || user.refreshToken !== token) {
         throw new UnauthorizedException('Invalid refresh token');
       }
-
       const payload = { sub: user.id, username: user.username, roles: user.roles.map(role => role.name) };
       return { accessToken: await this.jwtService.signAsync(payload) };
     } catch (error) {
@@ -89,5 +113,36 @@ export class AuthService {
     } catch (error) {
       throw new ForbiddenException(error);
     }
+  }
+
+  async getMe(req: Request): Promise<{valid: true, user: ILoginResponse}> {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader.split(' ')[1];
+    if (!token || token === 'null') throw new UnauthorizedException('You are not logged in!');
+    try {
+      const payload = await this.jwtService.verifyAsync(token);
+      const user = await this.userRepository.findOne({where: {
+          id: payload.sub
+        }});
+      const userInfo = {
+        username: user.username,
+        displayName: user.displayName,
+        id: payload.sub,
+        roles: user.roles.map(role => role.name),
+      };
+      return { valid: true, user: userInfo };
+    } catch (error) {
+        throw new ForbiddenException(error);
+    }
+  }
+
+  async validateUser(username: string, pass: string): Promise<any> {
+    const user = await this.userRepository.findOne({ where: { username } });
+    const isPasswordValid = await compare(username, user.password);
+    if (user && isPasswordValid) {
+      const { password, ...result } = user;
+      return result;
+    }
+    return null;
   }
 }
