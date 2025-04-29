@@ -30,7 +30,12 @@ services:
     build: ../MisaServerCoreFE
     container_name: MisaServerCoreFE
     environment:
-      - PROD_HOST=MisaServerCoreFE
+      - IS_PROD=true
+      - HOST=misaserver.ru
+      - IS_PROD=true
+      - PORT=8080
+      - MISA_FILES_ENTRY_HOST=MisaFilesFE
+      - MISA_FILES_ENTRY_PORT=8081
     ports:
       - '8080:8080'
     depends_on:
@@ -39,6 +44,53 @@ services:
       - /usr/src/corefe/node_modules
     networks:
       - misa_network
+
+  misafiles_fe:
+    build: ../MisaFilesFE
+    container_name: MisaFilesFE
+    environment:
+      - PROD_HOST=MisaFilesFE
+      - IS_PROD=true
+      - HOST=misaserver.ru
+      - IS_PROD=true
+      - PORT=8081
+    ports:
+      - '8081:8081'
+    depends_on:
+      - corebe
+      - corefe
+      - misafilesbe
+    volumes:
+      - /usr/src/misafiles_fe/node_modules
+    networks:
+      - misa_network
+
+  misafilesbe:
+    build: ../MisaFilesBE/
+    container_name: MisaFilesBE
+    ports:
+      - "5002:5002"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=misauser
+      - DB_PASSWORD=misauser123
+      - DB_NAME=misaserverappdb
+      - DB_SYNCHRONIZE=false
+      - DB_SCHEMA=misaFiles_schema
+      - JWT_SECRET=misaserverJWTkey123
+      - KAFKA_HOST=kafka
+      - PORT=5002
+      - AUTH_HOST=corebe:5000
+    depends_on:
+      - db
+    networks:
+      - misa_network
+      - kafka-network
+    volumes:
+      - /usr/src/misafiles/node_modules
+      - /home/misa_server/MisaServer/uploads:/usr/src/uploads
 
 
 
@@ -70,32 +122,6 @@ services:
     networks:
       - misa_network
 
-  misafiles:
-    build: ../MisaFilesBE/
-    container_name: MisaFilesBE
-    ports:
-      - "5002:5002"
-    environment:
-      - NODE_ENV=production
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USER=misauser
-      - DB_PASSWORD=misauser123
-      - DB_NAME=misaserverappdb
-      - DB_SYNCHRONIZE=false
-      - DB_SCHEMA=misaFiles_schema
-      - JWT_SECRET=misaserverJWTkey123
-      - KAFKA_HOST=kafka
-      - PORT=5002
-      - AUTH_HOST=corebe:5000
-    depends_on:
-      - db
-    networks:
-      - misa_network
-      - kafka-network
-    volumes:
-      - /usr/src/misafiles/node_modules
-      - /home/misa_server/MisaServer/uploads:/usr/src/uploads
 
 networks:
   misa_network:

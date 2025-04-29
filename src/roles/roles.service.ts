@@ -2,6 +2,7 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from './entities/roles.entity';
 import { Repository } from 'typeorm';
+import { join } from 'path';
 
 
 @Injectable()

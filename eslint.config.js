@@ -14,9 +14,10 @@ const config = {
 
   },
   rules: {
+    'jsx-a11y/anchor-has-content': 'off',
+    'jsx-a11y/heading-has-content': 'off',
     'max-len': ['error', { code: 180, comments: 512 }],
     'func-names': ['error', 'as-needed'],
-    'no-unused-expressions': 'error',
     'semi': ['error', 'always'],
     'semi-spacing': ['error', { before: false, after: true }],
     'no-else-return': 'error',
@@ -34,8 +35,8 @@ const config = {
     'no-confusing-arrow': 'error',
     'no-nested-ternary': 'error',
     'space-before-blocks': ['error', { functions: 'always', keywords: 'always', classes: 'always' }],
-    'max-classes-per-file': 0,
-    'class-methods-use-this': 0,
+    'max-classes-per-file': 'off',
+    'class-methods-use-this': 'off',
     'nonblock-statement-body-position': ['error', 'beside'],
     'brace-style': 'error',
     'array-bracket-spacing': ['error', 'never'],
@@ -51,13 +52,13 @@ const config = {
     'no-trailing-spaces': ['error'],
     'space-before-function-paren': ['error', { anonymous: 'always', named: 'never', asyncArrow: 'always' }],
     'no-lonely-if': 'error',
-    'no-console': 'warn',
+    'no-console': 'error',
     "quotes": 0,
     'quote-props': 0,
     ...tseslint.configs['recommended'].rules,
     ...tseslint.configs['eslint-recommended'],
   },
-  ignores: ['eslint.config.js', 'vite.config.ts', '/dist/'],
+  ignores: ['eslint.config.js', 'vite.config.ts'],
   files: ['**/*.ts', '**/*.tsx'],
 
 };
