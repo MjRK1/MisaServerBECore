@@ -4,8 +4,8 @@
         server_name misaserver.ru;
         client_max_body_size 100M;
 
-        ssl_certificate /etc/nginx/ssl/nginx.crt;
-        ssl_certificate_key /etc/nginx/ssl/nginx.key;
+        ssl_certificate /etc/nginx/ssl/fullchain.crt;
+        ssl_certificate_key /etc/nginx/ssl/misaserver.ru.key;
 
         location /core/ {
 #                 rewrite ^/core/(.*)$ /$1 break;
