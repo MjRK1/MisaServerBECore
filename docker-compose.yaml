@@ -61,7 +61,7 @@ services:
       - corefe
       - misafilesbe
     volumes:
-      - /usr/src/misafiles_fe/node_modules
+      - ../MisaFilesFE:/app
     networks:
       - misa_network
 
