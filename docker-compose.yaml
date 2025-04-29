@@ -31,7 +31,7 @@ services:
     container_name: MisaServerCoreFE
     environment:
       - IS_PROD=true
-      - HOST=localhost
+      - HOST=0.0.0.0
       - IS_PROD=true
       - PORT=8080
       - MISA_FILES_ENTRY_HOST=MisaFilesFE
@@ -51,7 +51,7 @@ services:
     environment:
       - PROD_HOST=MisaFilesFE
       - IS_PROD=true
-      - HOST=localhost
+      - HOST=0.0.0.0
       - IS_PROD=true
       - PORT=8081
     ports:
