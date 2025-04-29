@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
@@ -32,7 +32,7 @@ export class RolesGuard implements CanActivate {
       });
       return requiredRoles.some(role => payload.roles.includes(role) || payload.roles.includes('ADMIN'));
     } catch (error) {
-      return false;
+      return error;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Module, Type } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -12,7 +12,6 @@ import { JwtService } from '@nestjs/jwt';
 import { RolesModule } from './roles/roles.module';
 import { RolesGuard } from './roles/roles.guard';
 import { ModuleModule } from './module/module.module';
-import { KafkaModule } from './kafka/kafka.module';
 import { Role } from './roles/entities/roles.entity';
 
 

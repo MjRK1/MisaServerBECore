@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 import { KafkaService } from './kafka.service';
 import { Public } from '../decorators/isPublic.decorator';
 
@@ -8,7 +8,7 @@ export class KafkaController {
 
   @Public()
   @Post('upload')
-  async upload(@Body() fileData: any): Promise<any> {
+  async upload(): Promise<any> {
     await this.kafkaService.sendMessage('file-uploaded', 'privet');
     return 'privet';
   }

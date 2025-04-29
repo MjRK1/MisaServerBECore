@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { GatewayTimeoutException, Injectable, OnModuleInit } from '@nestjs/common';
 import * as fs from 'node:fs';
 import { ModuleConfig } from '../types/Module/module';
 import * as path from 'node:path';
@@ -26,6 +26,7 @@ export class ModuleService implements OnModuleInit {
       this.modules = parsedConfig || [];
     } catch (error) {
       this.modules = [];
+      throw new GatewayTimeoutException(error)
     }
   }
 
