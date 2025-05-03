@@ -1,9 +1,5 @@
 server {
-        listen 443 ssl;
-        server_name db.misaserver.ru;
-
-        ssl_certificate /etc/nginx/ssl/nginx.crt;
-        ssl_certificate_key /etc/nginx/ssl/nginx.key;
+        listen 80;
 
         location / {
                 proxy_pass http://misa_postgres:5432;

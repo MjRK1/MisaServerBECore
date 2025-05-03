@@ -1,11 +1,6 @@
 
       server {
-        listen 443 ssl;
-        server_name misaserver.ru;
-        client_max_body_size 100M;
-
-        ssl_certificate /etc/nginx/ssl/fullchain.crt;
-        ssl_certificate_key /etc/nginx/ssl/misaserver.ru.key;
+        listen 80;
 
         location /core/ {
 #                 rewrite ^/core/(.*)$ /$1 break;
