@@ -92,6 +92,16 @@ services:
       - /usr/src/misafiles/node_modules
       - /home/misa_server/MisaServer/uploads:/usr/src/uploads
 
+  misa_media:
+    image: ghcr.io/varbhat/exatorrent:latest
+    container_name: MisaMedia
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./exatorrent:/app/config
+      - ./downloads:/app/downloads
+    restart: always
+
 
 
   db:
