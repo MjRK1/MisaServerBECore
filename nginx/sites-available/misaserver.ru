@@ -8,7 +8,7 @@
         ssl_certificate_key /etc/nginx/ssl/certificate.key;
 
         location /core/ {
-                rewrite ^/core/(.*)$ /$1 break;
+#                 rewrite ^/core/(.*)$ /$1 break;
                 proxy_pass http://MisaServerCoreFE:8080;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
@@ -16,7 +16,7 @@
         }
 
         location /files/ {
-                rewrite ^/files/(.*)$ /$1 break;
+#                 rewrite ^/files/(.*)$ /$1 break;
                 proxy_pass http://MisaFilesFE:8081;
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
