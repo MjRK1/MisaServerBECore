@@ -1,7 +1,7 @@
 
       server {
         listen 443;
-        server_name misaserver.ru;
+        server_name api.misaserver.ru;
 
         ssl_certificate /etc/nginx/ssl/fullchain.crt;
         ssl_certificate_key /etc/nginx/ssl/certificate.key;
