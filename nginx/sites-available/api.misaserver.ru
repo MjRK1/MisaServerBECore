@@ -1,6 +1,10 @@
 
       server {
-        listen 80;
+        listen 443;
+        server_name misaserver.ru;
+
+        ssl_certificate /etc/ssl/misaserver.ru/fullchain.crt;
+        ssl_certificate_key /etc/ssl/misaserver.ru/certificate.key;
 
         location /core/ {
                 rewrite ^/core/(.*)$ /$1 break;
