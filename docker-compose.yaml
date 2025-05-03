@@ -3,7 +3,7 @@ services:
     build: .
     container_name: MisaServerCoreBE
     ports:
-      - "5000:5000"
+      - "5001:5000"
     environment:
       - NODE_ENV=production
       - DB_HOST=db
@@ -15,7 +15,7 @@ services:
       - DB_SCHEMA=misacore_schema
       - JWT_SECRET=misaserverJWTkey123
       - KAFKA_HOST=kafka
-      - PORT=5000
+      - PORT=5001
     depends_on:
       - db
     networks:
@@ -96,7 +96,7 @@ services:
     image: ghcr.io/varbhat/exatorrent:latest
     container_name: MisaMedia
     ports:
-      - "8082:8082"
+      - "5000:8082"
     volumes:
       - ./exatorrent:/app/config
       - ./downloads:/app/downloads
