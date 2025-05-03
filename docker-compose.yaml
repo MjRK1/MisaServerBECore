@@ -96,7 +96,7 @@ services:
     image: ghcr.io/varbhat/exatorrent:latest
     container_name: MisaMedia
     ports:
-      - "5000:8082"
+      - "8082:5000"
     volumes:
       - ./exatorrent:/app/config
       - ./downloads:/app/downloads
