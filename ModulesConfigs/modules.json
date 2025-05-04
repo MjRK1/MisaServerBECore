@@ -4,7 +4,8 @@
     "img": "MisaFiles.png",
     "enabled": true,
     "repo": "https://github.com/MisaserverFileServerBE.git",
-    "basePath": "/file-server",
+    "basePath": "MisaFiles",
+    "isExternal": false,
     "services": {
       "backend": {
         "host": "file-server",
@@ -18,14 +19,15 @@
   },
   {
     "name": "ExaTorrent",
-    "img": "ExaTorrent.png",
+    "img": null,
     "enabled": true,
     "repo": "https://github.com/varbhat/exatorrent",
-    "basePath": "/media",
+    "basePath": "media",
+    "isExternal": true,
     "services": {
       "frontend": {
         "host": "10.0.0.145",
-        "port": 3002
+        "port": 5000
       }
     }
   }
