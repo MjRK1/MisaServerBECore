@@ -15,5 +15,18 @@
         "port": 3002
       }
     }
+  },
+  {
+    "name": "ExaTorrent",
+    "img": "ExaTorrent.png",
+    "enabled": true,
+    "repo": "https://github.com/varbhat/exatorrent",
+    "basePath": "/media",
+    "services": {
+      "frontend": {
+        "host": "10.0.0.145",
+        "port": 3002
+      }
+    }
   }
 ]
