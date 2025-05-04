@@ -103,6 +103,7 @@ services:
     networks:
       - misa_network
     restart: always
+    command: ["--base-path", "/media"]
 
 
 
