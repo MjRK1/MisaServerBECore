@@ -105,6 +105,7 @@ export class AuthService {
   async verifyToken(req: Request) {
     const authHeader = req.headers['authorization'];
     const token = authHeader.split(' ')[1];
+    console.log(token);
     if (!token) throw new UnauthorizedException('You are not logged in!');
 
     try {

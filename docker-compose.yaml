@@ -82,7 +82,7 @@ services:
       - JWT_SECRET=misaserverJWTkey123
       - KAFKA_HOST=kafka
       - PORT=5002
-      - AUTH_HOST=corebe:5000
+      - AUTH_HOST=corebe:5001
     depends_on:
       - db
     networks:
