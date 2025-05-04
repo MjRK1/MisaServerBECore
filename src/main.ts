@@ -5,8 +5,7 @@ import * as process from 'node:process';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {cors: true});
   app.enableCors({
-    origin: ['https://misaserver.ru'],
-    credentials: true,
+    origin: '*',
   });
  await app.listen(process.env.PORT); // for local hosting
  //  await app.listen(5000);
