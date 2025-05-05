@@ -5,6 +5,7 @@
 
         ssl_certificate /etc/nginx/ssl/fullchain.crt;
         ssl_certificate_key /etc/nginx/ssl/certificate.key;
+        client_max_body_size 1G;
 
         location /core/ {
                 rewrite ^/core/(.*)$ /$1 break;
