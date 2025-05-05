@@ -2,7 +2,7 @@
       server {
         listen 443 ssl;
         server_name misaserver.ru;
-        client_max_body_size 100M;
+        client_max_body_size 1G;
 
         ssl_certificate /etc/nginx/ssl/fullchain.crt;
         ssl_certificate_key /etc/nginx/ssl/certificate.key;
